@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Shapes</h1>
+    </header>
+    
+    <h2 style="text-align: center">Create A Shape</h2>
+
+    <div class="form">
+        <label for="color">Colour</label>
+        <input type="color" id="color" value=#ff7053>
+        <label for="startX">StartX</label>
+        <input type="number" id="startX" value=100>
+        <label for="startY">StartY</label>
+        <input type="number" id="startY" value=100>
+        <label for="width">Width</label>
+        <input type="number" id="width" value=100>
+        <label for="height">Height</label>
+        <input type="number" id="height" value=200>
+    </div>
+    <button onclick="rectFunction()">Click me</button>
+    <div id="myCanvas">
+        <canvas id="shape" width="800" height="600" style="border: 1px solid black">
+            Your Browser Can't Handle The Truth
+        </canvas>
+    </div>
+
+    <script>
+        var colour = "#ff7053"
+        var startX = 100
+        var startY = 100
+        var width = 100
+        var height = 200
+
+        var canvas = document.getElementById('shape');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = colour
+
+
+
+        function rectFunction() {
+
+            ctx.fillRect(startX,startY,width,height);
+        }
+
+        function colourChange() {
+
+        }
+
+</script>
+</body>
+
+</html>
