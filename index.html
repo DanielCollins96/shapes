@@ -48,8 +48,9 @@
 
         var canvas = document.getElementById('shape');
         var ctx = canvas.getContext('2d');
+        var ctx2 = canvas.getContext('2d');
 
-        ctx.fillStyle = colour
+        
 
         ctx.beginPath();
     ctx.moveTo(75, 25);
@@ -59,18 +60,22 @@
     ctx.quadraticCurveTo(60, 120, 65, 100);
     ctx.quadraticCurveTo(125, 100, 125, 62.5);
     ctx.quadraticCurveTo(125, 25, 75, 25);
+    ctx.fillStyle = 'blue'
     ctx.fill();
     
     document.getElementById("color").addEventListener(onchange, colourChange())
 
         function rectFunction() {
-
-            ctx.fillRect(startX,startY,width,height);
+            ctx2.fillStyle = colour
+            ctx2.fillRect(startX,startY,width,height);
         }
 
         function colourChange() {
             // alert("Suk me nuts")
             console.log($('#color'))
+            console.log($('#color').val())
+            colour = $('#color').val()
+            // colour = document.getElementById('color').value
         }
 
 </script>
