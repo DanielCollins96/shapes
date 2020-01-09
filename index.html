@@ -36,18 +36,26 @@
     </div>
 
     <script>
-        var colour = "#ff7053"
-        var startX = 100
-        var startY = 100
-        var width = 100
-        var height = 200
+        var colour = document.getElementById("color").value;
+        var startX = document.getElementById("startX").value;
+        var startY = document.getElementById("startY").value;
+        var width = document.getElementById("width").value;
+        var height = document.getElementById("height").value;
 
         var canvas = document.getElementById('shape');
         var ctx = canvas.getContext('2d');
 
         ctx.fillStyle = colour
 
-
+        ctx.beginPath();
+    ctx.moveTo(75, 25);
+    ctx.quadraticCurveTo(25, 25, 25, 62.5);
+    ctx.quadraticCurveTo(25, 100, 50, 100);
+    ctx.quadraticCurveTo(50, 120, 30, 125);
+    ctx.quadraticCurveTo(60, 120, 65, 100);
+    ctx.quadraticCurveTo(125, 100, 125, 62.5);
+    ctx.quadraticCurveTo(125, 25, 75, 25);
+    ctx.fill();
 
         function rectFunction() {
 
