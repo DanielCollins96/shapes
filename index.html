@@ -7,36 +7,64 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <h1>Shapes</h1>
     </header>
-    
-    <h2 style="text-align: center">Create A Shape</h2>
 
-    <div class="form">
-        <label for="color">Colour</label>
-        <input type="color" id="color" value=#ff7053 onchange="colourChange()">
-        <label for="startX">StartX</label>
-        <input type="number" id="startX" value=100>
-        <label for="startY">StartY</label>
-        <input type="number" id="startY" value=100>
-        <label for="width">Width</label>
-        <input type="number" id="width" value=100>
-        <label for="height">Height</label>
-        <input type="number" id="height" value=200>
+    <h2 style="text-align: center">Create A Shape</h2>
+<div class="shapeForms">
+    <div class="RectForm">
+        <h2>Rectangle</h2>
+        <label for="color">Colour
+            <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+        </label>
+        <label for="startX">StartX
+            <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
+        </label>
+        <label for="startY">StartY
+            <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
+        </label>
+        <label for="width">Width
+            <input type="number" id="width" value=100 onchange="widthChange(this.value, this.id)">
+        </label>
+        <label for="height">Height
+            <input type="number" id="height" value=200 onchange="heightChange(this.value, this.id)">
+        </label>
+        <button onclick="rectFunction()">Create</button>
+        <button onclick="delRectFunction()">Delete</button>
     </div>
-    <button onclick="rectFunction()">Click me</button>
+
+    <div class="CircleForm">
+        <h2>Circle</h2>
+        <label for="color">Colour
+            <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+        </label>
+        <label for="startX">StartX
+            <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
+        </label>
+        <label for="startY">StartY
+            <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
+        </label>
+        <label for="radius">Radius
+            <input type="number" id="radius" value=100 onchange="radiusChange(this.value, this.id)">
+        </label>
+        <button onclick="createCircle()">Create</button>
+        <button onclick="delCircFunction()">Delete</button>
+    </div>
+</div>
     <div id="myCanvas">
-        <canvas id="shape" width="800" height="600" style="border: 1px solid black">
-            Your Browser Can't Handle The Truth
+        <canvas id="shapeCanvas" width="800" height="500" style="border: 1px solid black">
+            Your Browser Can't Handle The Truth!
         </canvas>
+    </div>
+    <div>
+        <button onclick="saveImage()">Save Image</button>
     </div>
 
     <script>
@@ -45,40 +73,95 @@
         var startY = document.getElementById("startY").value;
         var width = document.getElementById("width").value;
         var height = document.getElementById("height").value;
+        var radius = document.getElementById("radius").value;
 
-        var canvas = document.getElementById('shape');
+        var canvas = document.getElementById('shapeCanvas');
+        // var ctx2 = canvas.getContext('2d');
+
         var ctx = canvas.getContext('2d');
-        var ctx2 = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'xor';
 
-        
+        function createCircle() {
+            // var cCTX = canvas.getContext('2d');
+            ctx.stokeStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = colour;
+            ctx.fill()
+        }
 
-        ctx.beginPath();
-    ctx.moveTo(75, 25);
-    ctx.quadraticCurveTo(25, 25, 25, 62.5);
-    ctx.quadraticCurveTo(25, 100, 50, 100);
-    ctx.quadraticCurveTo(50, 120, 30, 125);
-    ctx.quadraticCurveTo(60, 120, 65, 100);
-    ctx.quadraticCurveTo(125, 100, 125, 62.5);
-    ctx.quadraticCurveTo(125, 25, 75, 25);
-    ctx.fillStyle = 'blue'
-    ctx.fill();
-    
-    document.getElementById("color").addEventListener(onchange, colourChange())
+        delCircFunction = () => {
+            ctx.clearArc(startX, startY, radius, 0, 2 * Math.PI)
+        }
 
-        function rectFunction() {
-            ctx2.fillStyle = colour
-            ctx2.fillRect(startX,startY,width,height);
+        function createBubble() {
+            // var ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(75, 25);
+            ctx.quadraticCurveTo(25, 25, 25, 62.5);
+            ctx.quadraticCurveTo(25, 100, 50, 100);
+            ctx.quadraticCurveTo(50, 120, 30, 125);
+            ctx.quadraticCurveTo(60, 120, 65, 100);
+            ctx.quadraticCurveTo(125, 100, 125, 62.5);
+            ctx.quadraticCurveTo(125, 25, 75, 25);
+            ctx.fillStyle = 'blue'
+            ctx.fill();
+        }
+
+        saveImage = () => {
+            const dataURI = canvas.toDataURL();
+            console.log('hihihi')
+            console.log(dataURI)
+        }
+        // createBubble()
+
+        // document.getElementById("color").addEventListener(onchange, colourChange())
+
+
+        function delRectFunction() {
+            ctx.clearRect(startX,startY,width,height)
+        }
+
+        rectFunction = () => {
+            ctx.fillStyle = colour
+            ctx.fillRect(startX, startY, width, height);
+        }
+
+
+
+        function startXChange(Value, id) {
+            // console.log(Value, id)
+            startX = Value
+        }
+
+        function startYChange(Value, id) {
+            // console.log(Value, id)
+            startY = Value
+        }
+
+        function widthChange(Value, id) {
+            // console.log(Value, id)
+            width = Value
+        }
+
+        function heightChange(Value, id) {
+            // console.log(Value, id)
+            height = Value
+        }
+
+        function radiusChange(Value, id) {
+            // console.log(Value, id)
+            radius = Value
         }
 
         function colourChange() {
             // alert("Suk me nuts")
-            console.log($('#color'))
-            console.log($('#color').val())
+            // console.log($('#color'))
+            // console.log($('#color').val())
             colour = $('#color').val()
             // colour = document.getElementById('color').value
         }
-
-</script>
+    </script>
 </body>
 
 </html>

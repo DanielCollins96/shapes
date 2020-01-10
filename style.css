@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: 'Nunito', sans-serif;
 }
 
 header {
@@ -8,16 +9,42 @@ header {
     justify-content: center;
     /* height: 20px */
 }
+.shapeForms {
+display: flex;
+justify-content: space-around;
+margin: 5px;
+padding: 5px;
+}
 
-.form {
+.RectForm {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    border: 1px black solid;
+    padding: 5px;
+    width: 250px;
     /* flex-direction: column; */
 }
 
-.form input {
+.RectForm input {
+    /* padding: 5px; */
+    margin: 5px;
+}
+
+.CircleForm {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 1px black solid;
+    width: 250px;
+    padding: 5px;
+
+    /* flex-direction: column; */
+}
+
+.CircleForm input {
     /* padding: 5px; */
     margin: 5px;
 }
