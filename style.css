@@ -9,9 +9,12 @@ header {
     justify-content: center;
     /* height: 20px */
 }
+.content {
+    width: 800px;
+}
 .shapeForms {
 display: flex;
-justify-content: space-around;
+justify-content: center;
 margin: 5px;
 padding: 5px;
 }

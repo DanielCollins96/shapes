@@ -16,7 +16,7 @@
     <header>
         <h1>Shapes</h1>
     </header>
-
+<div class="content">
     <h2 style="text-align: center">Create A Shape</h2>
 <div class="shapeForms">
     <div class="RectForm">
@@ -39,7 +39,9 @@
         <button onclick="rectFunction()">Create</button>
         <button onclick="delRectFunction()">Delete</button>
     </div>
-
+    <div>
+            <button onclick="saveImage()">Save Image</button>
+        </div>
     <div class="CircleForm">
         <h2>Circle</h2>
         <label for="color">Colour
@@ -63,9 +65,8 @@
             Your Browser Can't Handle The Truth!
         </canvas>
     </div>
-    <div>
-        <button onclick="saveImage()">Save Image</button>
-    </div>
+</div>
+
 
     <script>
         var colour = document.getElementById("color").value;
@@ -79,6 +80,8 @@
         // var ctx2 = canvas.getContext('2d');
 
         var ctx = canvas.getContext('2d');
+
+        //
         ctx.globalCompositeOperation = 'xor';
 
         function createCircle() {
