@@ -40,7 +40,7 @@
             <button onclick="delRectFunction()">Delete</button>
         </div>
         <div class="buttons">
-            <button onclick="saveImage()" class="button8">Save Image</button>
+            <button onclick="saveImage()" class="buttonSave">Save Image</button>
             <input type="button" onclick="rotateCanvas()" class="button9" value="Rotate">
         </div>
 
@@ -76,6 +76,7 @@
         var width = document.getElementById("width").value;
         var height = document.getElementById("height").value;
         var radius = document.getElementById("radius").value;
+        const theCanvas = document.querySelector('#shapeCanvas')
 
         var canvas = document.getElementById('shapeCanvas');
         // var ctx2 = canvas.getContext('2d');
@@ -103,9 +104,16 @@
         }
 
         saveImage = () => {
+            const a = document.createElement("a");
+
+            document.body.appendChild(a)
             const dataURI = canvas.toDataURL();
-            console.log('hihihi')
             console.log(dataURI)
+            a.href = dataURI
+            a.download = "canvas_image.png"
+            a.click();
+
+
         }
 
         var cnt = 0
