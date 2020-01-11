@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,55 +18,57 @@
     </header>
 
     <h2 style="text-align: center">Create A Shape</h2>
-<div class="shapeForms">
-    <div class="RectForm">
-        <h2>Rectangle</h2>
-        <label for="color">Colour
-            <input type="color" id="color" value=#ff7053 onchange="colourChange()">
-        </label>
-        <label for="startX">StartX
-            <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
-        </label>
-        <label for="startY">StartY
-            <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
-        </label>
-        <label for="width">Width
-            <input type="number" id="width" value=100 onchange="widthChange(this.value, this.id)">
-        </label>
-        <label for="height">Height
-            <input type="number" id="height" value=200 onchange="heightChange(this.value, this.id)">
-        </label>
-        <button onclick="rectFunction()">Create</button>
-        <button onclick="delRectFunction()">Delete</button>
-    </div>
+    <div class="shapeForms">
+        <div class="RectForm">
+            <h2>Rectangle</h2>
+            <label for="color">Colour
+                <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+            </label>
+            <label for="startX">StartX
+                <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
+            </label>
+            <label for="startY">StartY
+                <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
+            </label>
+            <label for="width">Width
+                <input type="number" id="width" value=100 onchange="widthChange(this.value, this.id)">
+            </label>
+            <label for="height">Height
+                <input type="number" id="height" value=200 onchange="heightChange(this.value, this.id)">
+            </label>
+            <button onclick="rectFunction()">Create</button>
+            <button onclick="delRectFunction()">Delete</button>
+        </div>
+        <div class="buttons">
+            <button onclick="saveImage()" class="button8">Save Image</button>
+            <input type="button" onclick="rotateCanvas()" class="button9" value="Rotate">
+        </div>
 
-    <div class="CircleForm">
-        <h2>Circle</h2>
-        <label for="color">Colour
-            <input type="color" id="color" value=#ff7053 onchange="colourChange()">
-        </label>
-        <label for="startX">StartX
-            <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
-        </label>
-        <label for="startY">StartY
-            <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
-        </label>
-        <label for="radius">Radius
-            <input type="number" id="radius" value=100 onchange="radiusChange(this.value, this.id)">
-        </label>
-        <button onclick="createCircle()">Create</button>
-        <button onclick="delCircFunction()">Delete</button>
+        <div class="CircleForm">
+            <h2>Circle</h2>
+            <label for="color">Colour
+                <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+            </label>
+            <label for="startX">StartX
+                <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
+            </label>
+            <label for="startY">StartY
+                <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
+            </label>
+            <label for="radius">Radius
+                <input type="number" id="radius" value=100 onchange="radiusChange(this.value, this.id)">
+            </label>
+            <button onclick="createCircle()">Create</button>
+            <button onclick="delCircFunction()">Delete</button>
+        </div>
     </div>
-</div>
     <div id="myCanvas">
         <canvas id="shapeCanvas" width="800" height="500" style="border: 1px solid black">
             Your Browser Can't Handle The Truth!
         </canvas>
     </div>
-    <div>
-        <button onclick="saveImage()">Save Image</button>
-    </div>
 
+    <!-- Scripts-->
     <script>
         var colour = document.getElementById("color").value;
         var startX = document.getElementById("startX").value;
@@ -78,8 +80,39 @@
         var canvas = document.getElementById('shapeCanvas');
         // var ctx2 = canvas.getContext('2d');
 
+        var compOp = 'xor'
         var ctx = canvas.getContext('2d');
-        ctx.globalCompositeOperation = 'xor';
+        ctx.globalCompositeOperation = compOp;
+
+
+        $("#shapeCanvas").click(function () {
+            console.log(getMousePos(canvas, event));
+            let mPos = getMousePos(canvas, event)
+            startX = mPos.x  
+            startY = mPos.y  
+
+        });
+
+
+        function getMousePos(canvas, evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        saveImage = () => {
+            const dataURI = canvas.toDataURL();
+            console.log('hihihi')
+            console.log(dataURI)
+        }
+
+        var cnt = 0
+        rotateCanvas = () => {
+            console.log('dick ' + cnt)
+            cnt++;
+        }
 
         function createCircle() {
             // var cCTX = canvas.getContext('2d');
@@ -108,18 +141,13 @@
             ctx.fill();
         }
 
-        saveImage = () => {
-            const dataURI = canvas.toDataURL();
-            console.log('hihihi')
-            console.log(dataURI)
-        }
         // createBubble()
 
         // document.getElementById("color").addEventListener(onchange, colourChange())
 
 
         function delRectFunction() {
-            ctx.clearRect(startX,startY,width,height)
+            ctx.clearRect(startX, startY, width, height)
         }
 
         rectFunction = () => {
@@ -127,7 +155,10 @@
             ctx.fillRect(startX, startY, width, height);
         }
 
-
+        function colourChange() {
+            colour = $('#color').val()
+            // colour = document.getElementById('color').value
+        }
 
         function startXChange(Value, id) {
             // console.log(Value, id)
@@ -152,14 +183,6 @@
         function radiusChange(Value, id) {
             // console.log(Value, id)
             radius = Value
-        }
-
-        function colourChange() {
-            // alert("Suk me nuts")
-            // console.log($('#color'))
-            // console.log($('#color').val())
-            colour = $('#color').val()
-            // colour = document.getElementById('color').value
         }
     </script>
 </body>
