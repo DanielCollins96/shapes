@@ -22,7 +22,10 @@
         <div class="RectForm">
             <h2>Rectangle</h2>
             <label for="color">Colour
-                <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+                <input type="color" id="rColor" value=#ff7053 onchange="rectColourChange()">
+            </label>
+            <label for="stroke">Stroke
+                <input type="checkbox" id="rStroke" onchange="rectStrokeHandler()">
             </label>
             <label for="startX">StartX
                 <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
@@ -32,6 +35,9 @@
             </label>
             <label for="width">Width
                 <input type="number" id="width" value=100 onchange="widthChange(this.value, this.id)">
+            </label>
+            <label for="width">Line px
+                <input type="number" id="rLineWidth" value=1 onchange="rLineWidthChange(this.value, this.id)">
             </label>
             <label for="height">Height
                 <input type="number" id="height" value=200 onchange="heightChange(this.value, this.id)">
@@ -47,14 +53,20 @@
         <div class="CircleForm">
             <h2>Circle</h2>
             <label for="color">Colour
-                <input type="color" id="color" value=#ff7053 onchange="colourChange()">
+                <input type="color" id="cColor" value=#ff7053 onchange="circColourChange()">
             </label>
+            <label for="stroke">Stroke
+                    <input type="checkbox" id="cStroke" onchange="circStrokeHandler()">
+                </label>
             <label for="startX">StartX
                 <input type="number" id="startX" value=100 onchange="startXChange(this.value, this.id)">
             </label>
             <label for="startY">StartY
                 <input type="number" id="startY" value=100 onchange="startYChange(this.value, this.id)">
             </label>
+            <label for="width">Line px
+                    <input type="number" id="cLineWidth" value=1 onchange="cLineWidthChange(this.value, this.id)">
+                </label>
             <label for="radius">Radius
                 <input type="number" id="radius" value=100 onchange="radiusChange(this.value, this.id)">
             </label>
@@ -70,13 +82,19 @@
 
     <!-- Scripts-->
     <script>
-        var colour = document.getElementById("color").value;
+        var rColour = document.getElementById("rColor").value;
+        var cColour = document.getElementById("cColor").value;
         var startX = document.getElementById("startX").value;
         var startY = document.getElementById("startY").value;
         var width = document.getElementById("width").value;
         var height = document.getElementById("height").value;
         var radius = document.getElementById("radius").value;
         const theCanvas = document.querySelector('#shapeCanvas')
+        var rectStroke = false
+        var circStroke = false
+        var rectWidth = 1
+        var circWidth = 1
+
 
         var canvas = document.getElementById('shapeCanvas');
         // var ctx2 = canvas.getContext('2d');
@@ -87,7 +105,7 @@
 
 
         $("#shapeCanvas").click(function () {
-            console.log(getMousePos(canvas, event));
+            // console.log(getMousePos(canvas, event));
             let mPos = getMousePos(canvas, event)
             startX = mPos.x  
             startY = mPos.y  
@@ -116,24 +134,75 @@
 
         }
 
-        var cnt = 0
         rotateCanvas = () => {
-            console.log('dick ' + cnt)
-            cnt++;
+
         }
 
         function createCircle() {
             // var cCTX = canvas.getContext('2d');
-            ctx.stokeStyle = 'yellow';
+            // ctx.stokeStyle = 'yellow';
+            if(circStroke){
             ctx.beginPath();
             ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
-            ctx.fillStyle = colour;
-            ctx.fill()
+            ctx.lineWidth = circWidth;
+            ctx.strokeStyle = cColour;
+            ctx.stroke()                
+            } else {
+            ctx.beginPath();
+            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = cColour;
+            ctx.fill()       
+            }
+
         }
 
         delCircFunction = () => {
             ctx.clearArc(startX, startY, radius, 0, 2 * Math.PI)
         }
+
+        function circStrokeHandler() {
+            circStroke = !circStroke;
+        } 
+
+
+        function circColourChange() {
+            cColour = $('#cColor').val()
+        }
+
+        function cLineWidthChange() {
+            circWidth = $('#cLineWidth').val()
+        }
+
+        function delRectFunction() {
+            ctx.clearRect(startX, startY, width, height)
+        }
+
+        rectFunction = () => {
+            if (rectStroke){
+                ctx.lineWidth = rectWidth;
+                ctx.strokeStyle = rColour
+                ctx.strokeRect(startX, startY, width, height);
+            }else {
+            ctx.fillStyle = rColour
+            ctx.lineWidth = rectWidth;
+            ctx.fillRect(startX, startY, width, height);
+            }
+        }
+
+        function rectColourChange() {
+            rColour = $('#rColor').val()
+  
+            // colour = document.getElementById('color').value
+        }
+        function rLineWidthChange() {
+            console.log($('#rLineWidth').val())
+            rectWidth = $('#rLineWidth').val()
+        }
+
+        function rectStrokeHandler() {
+            rectStroke = !rectStroke;
+        } 
+
 
         function createBubble() {
             // var ctx = canvas.getContext('2d');
@@ -147,25 +216,6 @@
             ctx.quadraticCurveTo(125, 25, 75, 25);
             ctx.fillStyle = 'blue'
             ctx.fill();
-        }
-
-        // createBubble()
-
-        // document.getElementById("color").addEventListener(onchange, colourChange())
-
-
-        function delRectFunction() {
-            ctx.clearRect(startX, startY, width, height)
-        }
-
-        rectFunction = () => {
-            ctx.fillStyle = colour
-            ctx.fillRect(startX, startY, width, height);
-        }
-
-        function colourChange() {
-            colour = $('#color').val()
-            // colour = document.getElementById('color').value
         }
 
         function startXChange(Value, id) {
